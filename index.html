@@ -1,20 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jake's Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jake Perrotta | Portfolio</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #121212;
+      color: #ddd;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: #4fc3f7;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #82eefd;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    /* Header / Hero */
+    header {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 0.2rem;
+      color: #4fc3f7;
+      opacity: 0;
+      animation: fadeInUp 1s forwards;
+    }
+    header p {
+      font-size: 1.5rem;
+      color: #bbb;
+      opacity: 0;
+      animation: fadeInUp 1s 0.5s forwards;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #181818dd;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      border-bottom: 1px solid #222;
+    }
+    nav a {
+      margin: 0 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 1.2px;
+    }
+    nav a:hover {
+      color: #82eefd;
+    }
+
+    /* Sections */
+    section {
+      padding: 60px 20px 40px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeInUp 0.7s forwards;
+    }
+    section:nth-of-type(2) { animation-delay: 0.3s; }
+    section:nth-of-type(3) { animation-delay: 0.6s; }
+    section:nth-of-type(4) { animation-delay: 0.9s; }
+    section:nth-of-type(5) { animation-delay: 1.2s; }
+
+    h2 {
+      color: #4fc3f7;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #4fc3f7;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    /* About */
+    #about p {
+      max-width: 600px;
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+
+    /* Projects */
+    #projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 20px;
+    }
+    .project-card {
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #0d6efd33;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 15px #4fc3f7aa;
+    }
+    .project-card h3 {
+      margin-bottom: 0.5rem;
+      color: #82eefd;
+    }
+    .project-card p {
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+    .project-card a {
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #4fc3f7;
+    }
+
+    /* Resume */
+    #resume {
+      max-width: 700px;
+      color: #ccc;
+      line-height: 1.5;
+    }
+    #resume a.button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 10px 18px;
+      background: #4fc3f7;
+      color: #121212;
+      border-radius: 5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    #resume a.button:hover {
+      background: #82eefd;
+    }
+
+    /* Contact */
+    #contact form {
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+    #contact label {
+      margin: 10px 0 4px;
+      font-weight: 600;
+      color: #aaa;
+    }
+    #contact input, #contact textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #222;
+      color: #ddd;
+      font-size: 1rem;
+      resize: vertical;
+      transition: background 0.3s ease;
+    }
+    #contact input:focus, #contact textarea:focus {
+      outline: none;
+      background: #333;
+    }
+    #contact button {
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background: #4fc3f7;
+      color: #121212;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #contact button:hover {
+      background: #82eefd;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+      color: #555;
+      border-top: 1px solid #222;
+      margin-top: 40px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.6rem;
+      }
+      header p {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header style="background-color: black; border-radius: 10px; border-color:blue; display: flex">
-        <h1 style="color:rgb(252, 252, 252);">Jake Perrotta</h1>
-        <div style="margin-left: auto;">
-            <a href="about.html"><button style="font-size:15px; text-align: center; border-radius:12px;">About me</button></a>
-            <button style="font-size:15px; text-align: center; border-radius:12px;">Resume</button>
-            <button style="font-size:15px; text-align: center; border-radius:12px;">Projects</button>
-            <button style="font-size:15px; text-align: center; border-radius:12px;">Contact</button>
-        </div>
-    </header>
-    
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#projects">Projects</a>
+  <a href="#resume">Resume</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<header>
+  <h1>Jake Perrotta</h1>
+  <p>Recent Graduate & Aspiring Software Engineer</p>
+</header>
+
+<div class="container">
+
+  <section id="about" tabindex="-1">
+    <h2>About Me</h2>
+    <p>Hi! I'm Jake Perrotta, a recent college graduate with a passion for software development and cybersecurity. I'm eager to start my professional journey and excited about opportunities to grow and contribute to impactful projects.</p>
+    <p>Currently honing my skills in web development, programming, and security fundamentals. Always open to new challenges and collaborations!</p>
+  </section>
+
+  <section id="projects" tabindex="-1">
+    <h2>Projects</h2>
+    <div class="project-card" tabindex="0">
+      <h3>Project One</h3>
+      <p>A web app that tracks personal goals and progress. Built with HTML, CSS, and JavaScript.</p>
+      <a href="#" target="_blank" rel="noopener">View Project</a>
+    </div>
+    <div class="project-card" tabindex="0">
+      <h3>Project Two</h3>
+      <p>A simple cybersecurity blog template made with static site generator.</p>
+      <a href="#" target="_blank" rel="noopener">View Project</a>
+    </div>
+    <div class="project-card" tabindex="0">
+      <h3>Project Three</h3>
+      <p>A basic NBA stats visualization using Python and D3.js.</p>
+      <a href="#" target="_blank" rel="noopener">View Project</a>
+    </div>
+  </section>
+
+  <section id="resume" tabindex="-1">
+    <h2>Resume</h2>
+    <p>Download my resume to learn more about my skills, education, and experience.</p>
+    <a class="button" href="resume.pdf" target="_blank" rel="noopener">Download Resume (PDF)</a>
+  </section>
+
+  <section id="contact" tabindex="-1">
+    <h2>Contact</h2>
+    <form onsubmit="return submitForm(event)">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" placeholder="Your name" required />
+
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="Your email" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Your message" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="form-status" style="margin-top:1rem; color:#4fc3f7;"></p>
+  </section>
+
+</div>
+
+<footer>
+  &copy; 2025 Jake Perrotta &mdash; Built with ❤️ and HTML/CSS/JS
+</footer>
+
+<script>
+  // Simple form submit handler - just simulates success (replace with backend or email service)
+  function submitForm(e) {
+    e.preventDefault();
+    const status = document.getElementById('form-status');
+    status.textContent = 'Thanks for reaching out, I will get back to you soon!';
+    e.target.reset();
+    return false;
+  }
+
+  // Optional: Smooth scroll polyfill or animation tweaks if you want more fancy scroll effects
+</script>
+
 </body>
 </html>
